@@ -2,9 +2,8 @@ package com.example.locator;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.test.mock.MockPackageManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -17,6 +16,7 @@ public class MainActivity extends Activity {
 
     // GPSTracker class
     GPSTracker gps;
+    private PackageManager MockPackageManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,9 +29,6 @@ public class MainActivity extends Activity {
 
                 ActivityCompat.requestPermissions(this, new String[]{mPermission},
                         REQUEST_CODE_PERMISSION);
-
-                // If a permission is not allowed by the user, this condition will
-                execute every time, else your else part will work
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -48,7 +45,7 @@ public class MainActivity extends Activity {
                 gps = new GPSTracker(MainActivity.this);
 
                 // check if GPS enabled
-                if(gps.canGetLocation()){
+                if (gps.canGetLocation()) {
 
                     double latitude = gps.getLatitude();
                     double longitude = gps.getLongitude();
@@ -56,7 +53,7 @@ public class MainActivity extends Activity {
                     // \n is for new line
                     Toast.makeText(getApplicationContext(), "Your Location is - \nLat: "
                             + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
-                }else{
+                } else {
                     // can't get location
                     // GPS or Network is not enabled
                     // Ask user to enable GPS/network in settings
@@ -65,6 +62,8 @@ public class MainActivity extends Activity {
 
             }
         });
+    }
+}
 
 
 
